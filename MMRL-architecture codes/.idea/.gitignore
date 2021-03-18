@@ -1,0 +1,8 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../../../../../../:\Users\Administrator\Desktop\tutorials\reinforcement learning\mofanpy reinforcement learning\Reinforcement-learning-with-tensorflow\contents\2_Q_Learning_maze\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
