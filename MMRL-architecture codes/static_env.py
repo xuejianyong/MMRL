@@ -5,14 +5,19 @@ import itertools as it
 import numpy as np
 import random
 import time
+import os
 
 
 interaction_images = {
-    'agent': 'images/agent.png',
-    'orange': 'images/orange.png',
-    'wall': 'images/wall.png'
+    'agent':'images/agent.png',
+    'orange':'images/orange.png',
+    'wall':'images/wall.png',
+    'pac_1':'images/pac_1.png',
+    'pac_2':'images/pac_2.png'
+
 
 }
+currentPath = os.getcwd()
 
 
 UNIT = 70
@@ -85,13 +90,13 @@ class Env(tk.Tk, object):
         """
 
         # create the agent and the fruit(or the prey)
-        agent_image = Image.open("C:\\Users\\Administrator\\Desktop\\tutorials\\tkinter\\Q_Learning_maze-MF-1\\images\\agent.png")
+        agent_image = Image.open(os.path.join(currentPath,interaction_images['agent']))
         agent_image = agent_image.resize((UNIT, UNIT), Image.ANTIALIAS)
         self.agent_img = ImageTk.PhotoImage(agent_image)
         self.agent = self.canvas.create_image(0, 0, anchor="nw", image=self.agent_img)
 
         # fruit_image = Image.open(interaction_images['orange'])
-        fruit_image = Image.open("C:\\Users\\Administrator\\Desktop\\tutorials\\tkinter\\Q_Learning_maze-MF-1\\images\\orange.png")
+        fruit_image = Image.open(os.path.join(currentPath,interaction_images['orange']))
         fruit_image = fruit_image.resize((UNIT, UNIT), Image.ANTIALIAS)
         self.fruit_img = ImageTk.PhotoImage(fruit_image)
         all_locations.remove([0, 0])  # 这里猎物的位置要随机出现， 同时猎物的移动方向也确定了下来
@@ -101,17 +106,23 @@ class Env(tk.Tk, object):
         #self.prey_direction = 'sw'
         #self.canvas.create_rectangle(100, 100, UNIT, UNIT, fill='red')
 
-        wall_image = Image.open("C:\\Users\\Administrator\\Desktop\\tutorials\\tkinter\\Q_Learning_maze-MF-1\\images\\wall.png")
+        wall_image = Image.open(os.path.join(currentPath,interaction_images['wall']))
         wall_image = wall_image.resize((UNIT - 4, UNIT - 4), Image.ANTIALIAS)
         self.wall_img = ImageTk.PhotoImage(wall_image)
 
-        pac_2_image = Image.open("C:\\Users\\Administrator\\Desktop\\tutorials\\tkinter\\Q_Learning_maze-MF-1\\images\\pac_2.png")
+        pac_2_image = Image.open(os.path.join(currentPath,interaction_images['pac_2']))
         pac_2_image = pac_2_image.resize((UNIT - 10, UNIT - 10), Image.ANTIALIAS)
         self.pac_2_img = ImageTk.PhotoImage(pac_2_image)
         all_locations.remove(list(map(int, self.canvas.coords(self.fruit))))
         x_prey, y_prey = all_locations[random.randint(0, len(all_locations) - 1)]
-        self.canvas.create_image(x_prey+5, y_prey+5, anchor="nw", image=self.pac_2_img)
+        self.pac2 = self.canvas.create_image(x_prey+5, y_prey+5, anchor="nw", image=self.pac_2_img)
 
+        pac_1_image = Image.open(os.path.join(currentPath, interaction_images['pac_1']))
+        pac_1_image = pac_1_image.resize((UNIT - 10, UNIT - 10), Image.ANTIALIAS)
+        self.pac_1_img = ImageTk.PhotoImage(pac_1_image)
+        all_locations.remove(list(map(int, list(np.array(self.canvas.coords(self.pac2)) - 5))))
+        x_prey, y_prey = all_locations[random.randint(0, len(all_locations) - 1)]
+        self.canvas.create_image(x_prey + 5, y_prey + 5, anchor="nw", image=self.pac_1_img)
 
         # pack all
         self.canvas.bind("<Button-1>", lambda event: self.drawRect(event))

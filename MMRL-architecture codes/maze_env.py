@@ -10,6 +10,7 @@ from  PIL import Image, ImageTk, ImageGrab
 import tkinter as tk
 import itertools as it
 import random
+import os
 
 UNIT = 70   # pixels
 MAZE_H = 7  # grid height
@@ -22,6 +23,16 @@ x_range = range(0, MAZE_H)
 y_range = range(0, MAZE_W)
 all_locations = np.array(list(it.product(x_range,y_range)))*UNIT
 all_locations = all_locations.tolist()
+
+
+interaction_images = {
+    'agent':'images/agent.png',
+    'orange':'images/orange.png',
+    'wall':'images/wall.png'
+}
+currentPath = os.getcwd()
+
+
 
 class Maze(tk.Tk, object):
     def __init__(self):
@@ -83,13 +94,13 @@ class Maze(tk.Tk, object):
         """
 
         # create the agent and the fruit(or the prey)
-        agent_image = Image.open("C:\\Users\\Administrator\\Desktop\\tutorials\\tkinter\\Q_Learning_maze-MF-1\\images\\agent.png")
+        agent_image = Image.open(os.path.join(currentPath,interaction_images['agent']))
         agent_image = agent_image.resize((UNIT, UNIT), Image.ANTIALIAS)
         self.agent_img = ImageTk.PhotoImage(agent_image)
         self.agent = self.canvas.create_image(0, 0, anchor="nw", image=self.agent_img)
 
         # fruit_image = Image.open(interaction_images['orange'])
-        fruit_image = Image.open("C:\\Users\\Administrator\\Desktop\\tutorials\\tkinter\\Q_Learning_maze-MF-1\\images\\orange.png")
+        fruit_image = Image.open(os.path.join(currentPath,interaction_images['orange']))
         fruit_image = fruit_image.resize((UNIT, UNIT), Image.ANTIALIAS)
         self.fruit_img = ImageTk.PhotoImage(fruit_image)
         # 这里猎物的位置要随机出现， 同时猎物的移动方向也确定了下来
@@ -100,7 +111,7 @@ class Maze(tk.Tk, object):
         #self.prey_direction = 'sw'
 
         # 初始化 wall 的图片
-        wall_image = Image.open("C:\\Users\\Administrator\\Desktop\\tutorials\\tkinter\\Q_Learning_maze-MF-1\\images\\wall.png")
+        wall_image = Image.open(os.path.join(currentPath,interaction_images['wall']))
         wall_image = wall_image.resize((UNIT - 2, UNIT - 2), Image.ANTIALIAS)
         self.wall_img = ImageTk.PhotoImage(wall_image)
 
