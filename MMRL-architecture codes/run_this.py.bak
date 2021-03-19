@@ -10,28 +10,26 @@ import numpy as np
 #from module import MultipleModel
 
 N_MODULE = 6
-EPISODES = 100
+EPISODES = 20
 MAX_STEP = 100
 
 step_list = []
 def update():
     print("--- Interaction starts ---")
 
-    for episode in range(EPISODES):  # 总共进行100次的完整迭代
+    for episode in range(EPISODES):  
         step = 0
         #print("--- Episode: %d ---" % episode)
-        observation = env.reset()  # initial observation
-        while True:  # agent开始每一步的与环境的交互
-            action = RL.choose_action(str(observation))  # RL choose action based on observation
-            #action = MM.choose_action(str(observation))
-            #print(env.action_space[action])
-            # 这里需要给出agent预计到达的状态，以及可能获得的reward
-            observation_, reward, done = env.step(action)  # RL take action and get next observation and reward
-            env.render()  # fresh env 每一步之间停留的时间的设置也在这块，先更新显示，然后等待一下
-            RL.learn(str(observation), action, reward, str(observation_))  # RL learn from this transition
-            observation = observation_  # swap observation
+        observation = env.reset() 
+        while True: 
+            action = RL.choose_action(str(observation)) 
+            
+            observation_, reward, done = env.step(action)  
+            env.render() 
+            RL.learn(str(observation), action, reward, str(observation_)) 
+            observation = observation_  
             step += 1
-            if done or (step >= MAX_STEP):  # break while when the hunter catches a prey, or within 100 steps
+            if done or (step >= MAX_STEP): 
                 break
         print('The episode: %d,  with %d steps.' % (episode, step))
         step_list.append(step)
@@ -49,9 +47,9 @@ def plot_step():
 
 
 if __name__ == "__main__":
-    env = Maze()  # 创建一个交互的环境
+    env = Maze()  
     RL = QLearningTable(actions=list(range(env.n_actions)))  # 建立一个学习模型
     #MM = MultipleModel(actions=list(range(env.n_actions)), n_modules=list(range(N_MODULE)))
-    env.after(500, update)  # 继续进行后续的交互
+    env.after(500, update)  
     env.mainloop()
     plot_step()

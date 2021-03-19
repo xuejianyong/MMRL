@@ -112,9 +112,9 @@ class Maze(tk.Tk, object):
         #print('reset is done')
         return self.canvas.coords(self.agent)  # return observation
 
-    
+    # 当赋予agent一个动作的时候，需要agent去执行这个动作，并且给与反馈
     def step(self, action):
-        s = self.canvas.coords(self.agent) 
+        s = self.canvas.coords(self.agent)  # 获取当前agent在maze当中的坐标
         base_action = np.array([0, 0])
         if action == 0:   # north
             if s[1] > UNIT:
@@ -187,8 +187,8 @@ class Maze(tk.Tk, object):
         return s_, reward, done
 
     def render(self):
-        self.update()  
-        time.sleep(0.1) 
+        self.update()  # 执行一个动作之后对于画布的刷新
+        time.sleep(0.1)  # 给画布更新足够的时
 
 
 def update():
