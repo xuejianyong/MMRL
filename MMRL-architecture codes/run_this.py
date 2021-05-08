@@ -26,13 +26,25 @@ def update():
             
             observation_, reward, done = env.step(action)  
             env.render() 
-            RL.learn(str(observation), action, reward, str(observation_)) 
+            RL.learn(str(observation), action, reward, str(observation_))
             observation = observation_  
             step += 1
             if done or (step >= MAX_STEP): 
                 break
         print('The episode: %d,  with %d steps.' % (episode, step))
         step_list.append(step)
+    # print(RL.memory)
+    memory_standby = []
+    for memory_i in RL.memory:
+        if not memory_i[0] in memory_standby:
+            memory_standby.append(memory_i[0])
+    print(memory_standby)
+    for memory_standby_i in memory_standby:
+        for memory_i in RL.memory:
+            if memory_i[0] == memory_standby_i:
+                print(memory_i)
+        print()
+
     print('over')  # end of game
     env.destroy()
 
