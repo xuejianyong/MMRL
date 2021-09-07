@@ -33,18 +33,15 @@ def update():
                 break
         print('The episode: %d,  with %d steps.' % (episode, step))
         step_list.append(step)
-    # print(RL.memory)
-    memory_standby = []
-    for memory_i in RL.memory:
-        if not memory_i[0] in memory_standby:
-            memory_standby.append(memory_i[0])
-    print(memory_standby)
-    for memory_standby_i in memory_standby:
-        for memory_i in RL.memory:
-            if memory_i[0] == memory_standby_i:
-                print(memory_i)
-        print()
 
+    # print(RL.p_table)
+    states_list = []
+    records = RL.p_table['s'].values
+    for record_i in records:
+        if record_i not in states_list:
+            states_list.append(record_i)
+    for state_i in states_list:
+        print(RL.p_table.loc[RL.p_table['s'] == state_i])
     print('over')  # end of game
     env.destroy()
 

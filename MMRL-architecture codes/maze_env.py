@@ -132,6 +132,7 @@ class Maze(tk.Tk, object):
             pass
         self.canvas.move(self.agent, base_action[0], base_action[1])  # move agent
 
+        """
         # move prey
         fruit_coords = list(map(int, self.canvas.coords(self.fruit)))
         base_fruit = np.array([0, 0])
@@ -172,6 +173,7 @@ class Maze(tk.Tk, object):
                 base_fruit[0] -= UNIT
                 base_fruit[1] += UNIT
         self.canvas.move(self.fruit, base_fruit[0], base_fruit[1])  # move fruit
+        """
 
         #print(self.canvas.coords(self.agent))
         #print(self.canvas.coords(self.fruit))
